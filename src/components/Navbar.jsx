@@ -32,7 +32,7 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end gap-2">
                     <Image src={avater} width={35} height={35} alt="User Image"></Image>
-                    <a className="btn bg-gray-700 text-white">Button</a>
+                    <Link href="/login" className="btn bg-gray-700 text-white">Login</Link>
                 </div>
             </div>
         </div>

@@ -1,7 +1,9 @@
 'use client'
 
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useForm } from "react-hook-form"
+
 
 
 const RegisterPage = () => {
@@ -11,7 +13,28 @@ const RegisterPage = () => {
         watch,
         formState: { errors },
     } = useForm()
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = async (data) => {
+        const { name, email, password, photo } = data;
+        
+
+        const { data: res, error } = await authClient.signUp.email({
+            email: email,
+            password:password,
+            name: name,
+            image: photo,
+            callbackURL: "/",
+
+            
+    });
+    console.log(res,error);
+    if(error){
+        alert(error.message);
+    }
+    else{
+        alert("SignIn Successful");
+    }
+
+}
     return (
         <div className=" container flex justify-center items-center mx-auto bg-slate-100 rounded-md  p-10">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -22,14 +45,19 @@ const RegisterPage = () => {
                     <label className="label">Name</label>
                     <input {...register("name", { required: "Name field is empty" })} type="text" className="input" placeholder="Your Name" />
                     {errors.name && <span className=" text-red-500 font-semibold">{errors.name.message}</span>}
+
                     <label className="label">Photo URL</label>
-                    <input type="text" className="input" placeholder="Your Photo URL" />
+                    <input {...register("photo", { required: "photo field is empty" })} type="text" className="input" placeholder="Your Photo URL" />
+                    {errors.photo && <span className=" text-red-500 font-semibold">{errors.photo.message}</span>}
+
                     <label className="label">Email</label>
                     <input {...register("email", { required: "Email field is empty" })} type="email" className="input" placeholder="Email" />
                     {errors.email && <span className=" text-red-500 font-semibold">{errors.email.message}</span>}
+
                     <label className="label">Password</label>
                     <input {...register("password", { required: "Password field is empty" })} type="password" className="input" placeholder="Password" />
                     {errors.password && <span className=" text-red-500 font-semibold">{errors.password.message}</span>}
+
                     <label className="label">
                         <input type="checkbox" required className="checkbox" />
                         Accept Trams & Conditions
