@@ -1,9 +1,13 @@
 'use client'
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 const LoginPage = () => {
+
+    const [isShowPassword,setIsShowPassword]=useState(false);
     const {
         register,
         handleSubmit,
@@ -48,7 +52,7 @@ const LoginPage = () => {
     return (
         <div className=" container flex justify-center items-center mx-auto bg-slate-100 p-20 rounded-md">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 shadow-md">
+                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 shadow-md relative">
                     <h2 className=" text-center font-bold text-xl p-5">Login your account</h2>
 
 
@@ -56,8 +60,9 @@ const LoginPage = () => {
                     <input {...register("email", { required: "Email field is empty" })} type="email" className="input" placeholder="Email" />
                     {errors.email && <span className=" text-red-500 font-semibold">{errors.email.message}</span>}
                     <label className="label">Password</label>
-                    <input {...register("password", { required: "Password field is empty" })} type="password" className="input" placeholder="Password" />
+                    <input {...register("password", { required: "Password field is empty" })}   type={isShowPassword ?  "text": "password"} className="input" placeholder="Password" />
                     {errors.password && <span className=" text-red-500 font-semibold">{errors.password.message}</span>}
+                    <span className=" absolute right-8 top-48" onClick={()=>setIsShowPassword(!isShowPassword)}>{isShowPassword ? <FaEyeSlash size={20}></FaEyeSlash> : <FaEye size={20}></FaEye>}</span>
 
                     <button className="btn btn-neutral mt-4">Login</button>
                     <p>Dont’t Have An Account ? <Link href="/register"><small className=" text-red-500 font-bold"> Register</small></Link></p>

@@ -1,11 +1,21 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
 import avater from "@/assets/user.png";
 import NavLink from "./NavLink";
+import { authClient } from "@/lib/auth-client";
+
+
 const Navbar = () => {
+    const { data: session, isPending } = authClient.useSession()
+    // console.log("Session Data ", session?.user);
+    const userInfo = session?.user;
+    // console.log("user info ", userInfo);
+    // console.log("Photo ",userInfo?.image)
+
     return (
         <div className=" container mx-auto my-5">
-            
+
             <div className="navbar bg-base-100 ">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -30,10 +40,23 @@ const Navbar = () => {
                         <li><NavLink href="/career">Career</NavLink></li>
                     </ul>
                 </div>
-                <div className="navbar-end gap-2">
-                    <Image src={avater} width={35} height={35} alt="User Image"></Image>
-                    <Link href="/login" className="btn bg-gray-700 text-white">Login</Link>
-                </div>
+
+                {isPending ? <span>Lading.....<span className="loading loading-spinner text-accent"></span>
+                </span> : userInfo ?
+                    <div className="navbar-end gap-2">
+                        <h2>{`Hello, ${userInfo?.name}`}</h2>
+                        <Image className=" rounded-full w-10 h-10" src={ avater} width={30} height={30} alt="User Image"></Image>
+                        <button onClick={async () => await authClient.signOut()} className="btn bg-gray-700 text-white">Sign Out</button>
+
+                    </div>
+                    :
+                    <div className="navbar-end gap-2">
+                        <h2>{` Hello, ${userInfo?.name || ""}`}</h2>
+                        <Image className=" rounded-full w-10 h-10" src={ avater} width={30} height={30} alt="User Image"></Image>
+                        <Link href="/login" className="btn bg-gray-700 text-white">Login</Link>
+
+                    </div>
+                }
             </div>
         </div>
     );
