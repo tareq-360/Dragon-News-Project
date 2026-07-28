@@ -6,13 +6,13 @@ const handleGoogleSignin = async () => {
     const data = await authClient.signIn.social({
         provider: "google",
     });
-    console.log("User Data ", data);
+    // console.log("User Data ", data);
 }
 const handleGithubSignin = async () => {
     const data = await authClient.signIn.social({
         provider: "github"
     })
-    console.log("User Data ", data);
+    // console.log("User Data ", data);
 
 }
 const RightSideBar = () => {
