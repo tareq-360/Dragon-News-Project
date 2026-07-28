@@ -9,12 +9,12 @@ import React from 'react';
 
 const MainLayout = ({children}) => {
     return (
-        <>
+        <main className=" container mx-auto px-5">
             <Header></Header>
             <MarqueePage></MarqueePage>
             <Navbar></Navbar>
             {children}
-        </>
+        </main>
     );
 };
 

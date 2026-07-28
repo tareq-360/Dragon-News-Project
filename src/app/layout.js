@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     >
       <body  className={`${poppines.className} min-h-full flex flex-col`}>
         
-        <main>{children}</main>
+        <main className=" container mx-auto">{children}</main>
       </body>
     </html>
   );
