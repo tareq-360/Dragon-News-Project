@@ -9,7 +9,7 @@ import React from 'react';
 
 const MainLayout = ({children}) => {
     return (
-        <main className=" container mx-auto px-5">
+        <main className=" container mx-auto px-5 sm:px-1">
             <Header></Header>
             <MarqueePage></MarqueePage>
             <Navbar></Navbar>
